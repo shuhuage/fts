@@ -91,7 +91,8 @@ class Earnings():
         try:
             soup = BeautifulSoup(self._get_page())
         except:
-            raise DateNotAvailableError, "there are no earnings data available for " + str(self._date_earnings)
+            return
+            #raise DateNotAvailableError, "there are no earnings data available for " + str(self._date_earnings)
 
         #print(soup.prettify())
                 
