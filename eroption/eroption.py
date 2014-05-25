@@ -5,6 +5,21 @@ import query_op
 import query_symbol
 
 
+def sortkeypicker(keynames):
+    negate = set()
+    for i, k in enumerate(keynames):
+        if k[:1] == '-':
+            keynames[i] = k[1:]
+            negate.add(k[1:])
+    def getit(adict):
+        composite = [adict[k] for k in keynames]
+        for i, (k, v) in enumerate(zip(keynames, composite)):
+            if k in negate:
+                composite[i] = -v
+        return composite
+    return getit
+
+
 if __name__ == '__main__':
     year = datetime.date.year
     month = datetime.date.month
@@ -80,3 +95,7 @@ if __name__ == '__main__':
     for entry in candidate_list:
         print entry
     #sort based on date, then percent and then ratio
+    print '========'
+    sorted_list = sorted(candidate_list, key=sortkeypicker(['date', '-percent', '-ratio']))
+    for entry in sorted_list:
+        print entry
